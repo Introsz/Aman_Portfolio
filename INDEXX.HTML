@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Pinjari | Portfolio</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f0f0f;
+            --text-color: #e0e0e0;
+            --accent-color: #888;
+            --highlight-color: #fff;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --spacing-unit: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--highlight-color);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: var(--highlight-color);
+            opacity: 0.5;
+            border: none;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .huge-text {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.9;
+            color: var(--highlight-color);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+        }
+
+        .about-text {
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        /* --- EDUCATION & EXPERIENCE SHARED STYLES --- */
+        .list-item {
+            border-top: 1px solid #333;
+            padding: 40px 0;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            transition: background-color 0.3s;
+        }
+
+        .list-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .date {
+            color: var(--accent-color);
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .details h3 {
+            font-size: 2rem;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+        }
+
+        .details p {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .details .sub-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- PROJECTS --- */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-item {
+            position: relative;
+            padding: 60px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .project-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--text-color);
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .project-item:hover .project-title {
+            color: var(--highlight-color);
+            padding-left: 20px;
+        }
+
+        .project-cat {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        /* --- CONTACT --- */
+        .footer-content {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .email-link {
+            font-size: clamp(2rem, 6vw, 5rem);
+            text-decoration: underline;
+            color: var(--highlight-color);
+        }
+
+        .social-links {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .social-links a {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border: 1px solid #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--highlight-color);
+            color: var(--bg-color);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .list-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            nav {
+                display: none; /* Hidden on mobile for simplicity */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <header class="container">
+        <div class="logo">AMAN PINJARI.</div>
+        <nav>
+            <ul>
+                <li><a href="#education" class="hover-target">Education</a></li>
+                <li><a href="#work" class="hover-target">Work</a></li>
+                <li><a href="#about" class="hover-target">About</a></li>
+                <li><a href="#contact" class="hover-target">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="huge-text">Developer.<br>Designer.<br>Student.</h1>
+            <p>Based in Surat, India. Creating digital experiences with focus on minimalism and performance.</p>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <span class="section-title">01 / ABOUT</span>
+            <div class="about-grid">
+                <div>
+                    <p style="color:var(--accent-color)">Surat, Gujarat</p>
+                </div>
+                <div class="about-text">
+                    <p>
+                        I am Aman Pinjari, a passionate learner and developer. 
+                        I focus on building robust applications and clean designs. 
+                        Currently pursuing my Bachelor's degree and exploring the world of technology.
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Skills:</strong> HTML, CSS, JavaScript, React, Node.js.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section (NEW) -->
+        <section id="education">
+            <span class="section-title">02 / EDUCATION</span>
+            
+            <!-- University -->
+            <div class="list-item hover-target">
+                <div class="date">2025 - 2029</div>
+                <div class="details">
+                    <h3>Bachelor of Science (Honour)</h3>
+                    <p>PP Savani University</p>
+                    <p class="sub-info">Vesu, Surat • Currently Enrolled</p>
+                </div>
+            </div>
+
+            <!-- School -->
+            <div class="list-item hover-target">
+                <div class="date">2024 - 2025</div>
+                <div class="details">
+                    <h3>Senior Secondary</h3>
+                    <p>LP Savani International School</p>
+                    <p class="sub-info">Surat • Completed</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <span class="section-title">03 / EXPERIENCE</span>
+            
+            <!-- Placeholder Experience Data - Edit this -->
+            <div class="list-item hover-target">
+                <div class="date">2024 - Present</div>
+                <div class="details">
+                    <h3>Freelance Developer</h3>
+                    <p>Self-Employed</p>
+                     <h3>Technical Content Writer</h3>
+                    <p>@MEDIUM</p>
+                    <p class="sub-info">Remote</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work / Projects Section -->
+        <section id="work">
+            <span class="section-title">04 / SELECTED WORKS</span>
+            
+            <div class="project-list">
+                <!-- Placeholder Projects - Edit this -->
+                <a href="#" class="project-item hover-target">
+                    <span class="project-cat">Web Design</span>
+                    <h2 class="project-title">Portfolio V1</h2>
+                </a>
+
+                <a href="#" class="project-item hover-target">
+                    <span class="project-cat">Development</span>
+                    <h2 class="project-title">E-Commerce App</h2>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="footer-content">
+                <p style="color: var(--accent-color); margin-bottom: 20px;">HAVE A PROJECT IN MIND?</p>
+                <a href="mailto:your-email@example.com" class="email-link hover-target">LET'S TALK</a>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/aman-pinjari/" target="_blank" class="hover-target">LinkedIn</a>
+                    <a href="#" target="_blank" class="hover-target">GitHub</a>
+                    <a href="#" target="_blank" class="hover-target">Instagram</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- CUSTOM CURSOR LOGIC ---
+        const cursor = document.querySelector('.cursor');
+        const hoverTargets = document.querySelectorAll('.hover-target');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        hoverTargets.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovered');
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovered');
+            });
+        });
+
+        // --- SMOOTH SCROLL FOR ANCHOR LINKS ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- SIMPLE SCROLL ANIMATION (FADE UP) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Apply animation style to sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.8s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
